@@ -1,9 +1,9 @@
 def app(environ, start_response):
 	querystring = environ['QUERY_STRING']
-	lines = querystring.split("&").strip()
+	lines = querystring.split("&")
 	result = ""
 	for l in lines:
-		result += l + "\r\n"
+		result += l.strip() + "\r\n"
 
 	start_response("200 OK", [
 		("Content-Type", "text/plain"),
