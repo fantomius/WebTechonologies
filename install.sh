@@ -7,4 +7,5 @@ sudo /etc/init.d/nginx restart
 
 cd /home/box/web
 gunicorn -w 1 -b 0.0.0.0:8080 hello:app &
-gunicorn -w 1 -b 0.0.0.0:8000 ask.ask.wsgi:application
+cd /home/box/web/ask/ask
+gunicorn -w 1 -b 0.0.0.0:8000 wsgi:application
