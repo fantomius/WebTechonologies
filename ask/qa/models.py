@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 
 class QuestionManager(models.Manager):
 	def new(self):
@@ -21,7 +21,7 @@ class Question(models.Model):
 	objects = QuestionManager()
 
 	def get_url(self):
-		return reverse("question_details", args=(self.pk,))
+		return reverse("question-details", args=(self.pk,))
 
 	class Meta:
 		db_table = 'qa_question'
