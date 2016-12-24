@@ -8,6 +8,8 @@ sudo /etc/init.d/nginx restart
 sudo /etc/init.d/mysql start
 mysql -uroot -e "CREATE DATABASE IF NOT EXISTS study"
 
+python /home/box/web/ask/manage.py syncdb
+
 cd /home/box/web
 gunicorn -w 1 -b 0.0.0.0:8080 hello:app &
 cd /home/box/web/ask/ask

@@ -6,9 +6,9 @@ class Question(models.Model):
 	title = models.CharField(max_length=255)
 	text = models.TextField()
 	added_at = models.DateTimeField()
-	rating = models.FloatField()
-	author = models.ForeignKey(User, on_delete=models.SET_NULL)
-	links = models.ManyToManyField(User)
+	rating = models.IntegerField()
+	author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+	links = models.ManyToManyField(User, related_names='question_links')
 
 	class Meta:
 		db_table = 'qa_question'
@@ -17,7 +17,7 @@ class Answer(models.Model):
 	text = models.TextField()
 	added_at = models.DateTimeField()
 	question = models.ForeignKey(Question, on_delete=models.CASCADE)
-	author = models.ForeignKey(User, on_delete=models.SET_NULL)
+	author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
 	class Meta:
 		db_table = 'qa_answer'
