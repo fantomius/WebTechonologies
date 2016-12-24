@@ -4,10 +4,10 @@ from django.core.urlresolvers import reverse
 
 class QuestionManager(models.Manager):
 	def new(self):
-		return super(QuestionManager, self).get_queryset().order_buy("-added_at")
+		return super(QuestionManager, self).get_queryset().order_by("-added_at")
 
 	def popular(self):
-		return super(QuestionManager, self).get_queryset().order_buy("-rating")
+		return super(QuestionManager, self).get_queryset().order_by("-rating")
 
 # Create your models here.
 class Question(models.Model):
@@ -21,7 +21,7 @@ class Question(models.Model):
 	objects = QuestionManager()
 
 	def get_url(self):
-		return reverse("question-details", args=(self.pk,))
+		return "/question/" + str(int(self.pk)) + "/"
 
 	class Meta:
 		db_table = 'qa_question'
