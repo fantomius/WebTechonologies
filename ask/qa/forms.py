@@ -9,11 +9,11 @@ class AskForm(forms.ModelForm):
 
 class AnswerForm(forms.Form):
 	text = forms.CharField(widget=forms.Textarea)
+	question_id = forms.CharField(widget=forms.HiddenInput())
 
-	def __init__(self, question, **kwargs):
+	def __init__(self, **kwargs):
 		self._question = question
 		super(AnswerForm, self).__init__(**kwargs)
 
 	def save(self):
-		self.cleaned_data['question'] = self._question
 		return Answer.objects.create(**self.cleaned_data)

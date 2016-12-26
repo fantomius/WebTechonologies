@@ -60,13 +60,13 @@ def question(request, id):
         raise Http404
 
     if request.method == "POST":
-        form = AnswerForm(question, request.POST)
+        form = AnswerForm(request.POST)
         if form.is_valid():
             answer = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
         else:
-            form = AnswerForm(question)
+            form = AnswerForm({'question_id', str(int(question.pk)))
 
     answers = Answer.objects.filter(question=question)
 
