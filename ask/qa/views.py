@@ -3,6 +3,7 @@ from django.http import HttpResponse, Http404
 from django.core.paginator import Paginator, EmptyPage
 
 from .models import Question, Answer
+from .forms import *
 
 def test(request, *args, **kwargs):
     return HttpResponse('OK')
@@ -58,10 +59,32 @@ def question(request, id):
     except:
         raise Http404
 
+    if request.method == "POST":
+        form = AnswerForm(question, request.POST)
+        if form.is_valid():
+            answer = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+        else:
+            form = AnswerForm(question)
+
     answers = Answer.objects.filter(question=question)
 
     return render(request, "questions/index.html", {
         'question': question,
-        'answers': answers
+        'answers': answers,
+        'form': form
     })
 
+def ask(request):
+    if request.method == "POST":
+        form = AskForm(request.POST)
+        if form.is_valid():
+            question = form.save()
+            url = question.get_url()
+            return HttpResponseRedirect(url)
+    else:
+        form = AskForm()
+    return render(request, 'questions/ask.html', {
+        'form': form
+    })
