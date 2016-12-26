@@ -9,7 +9,7 @@ class AskForm(forms.ModelForm):
 
 class AnswerForm(forms.Form):
 	text = forms.CharField(widget=forms.Textarea)
-	question = forms.CharField(widget=forms.HiddenInput())
+	question = forms.IntegerField(widget=forms.HiddenInput())
 
 	def __init__(self, **kwargs):
 		super(AnswerForm, self).__init__(**kwargs)
