@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 
 from .models import Question, Answer
@@ -60,13 +60,13 @@ def question(request, id):
         raise Http404
 
     if request.method == "POST":
-        form = AnswerForm(request.POST)
+        form = AnswerForm(**request.POST)
         if form.is_valid():
             answer = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
-        else:
-            form = AnswerForm({'question': str(int(question.pk))})
+    else:
+        form = AnswerForm()
 
     answers = Answer.objects.filter(question=question)
 

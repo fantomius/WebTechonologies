@@ -11,9 +11,6 @@ class AnswerForm(forms.Form):
 	text = forms.CharField(widget=forms.Textarea)
 	question = forms.IntegerField(widget=forms.HiddenInput())
 
-	def __init__(self, **kwargs):
-		super(AnswerForm, self).__init__(**kwargs)
-
 	def save(self):
 		self.cleaned_data['question_id'] = self.cleaned_data['question']
 		del(self.cleaned_data['question'])
