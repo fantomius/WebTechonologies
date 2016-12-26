@@ -9,6 +9,10 @@
 			<p>{{a.text}}</p>
 		{%endfor%}
 		<hr/>
-		{{form.as_p}}
+		<form action="{{q.get_url}}" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Submit" />
+		</form>
 	</body>
 </html>

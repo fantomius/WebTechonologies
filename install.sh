@@ -13,6 +13,6 @@ python /home/box/web/ask/manage.py syncdb
 cd /home/box/web
 gunicorn -w 1 -b 0.0.0.0:8080 hello:app &
 cd /home/box/web/ask/ask
-gunicorn -w 1 -b 0.0.0.0:8000 wsgi:application
+gunicorn -w 1 -b 0.0.0.0:8000 wsgi:application &
 
 
