@@ -66,7 +66,7 @@ def question(request, id):
             url = question.get_url()
             return HttpResponseRedirect(url)
         else:
-            form = AnswerForm({'question_id', str(int(question.pk)))
+            form = AnswerForm({'question', str(int(question.pk)))
 
     answers = Answer.objects.filter(question=question)
 
