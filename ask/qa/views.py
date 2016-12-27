@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth import authenticate, login
 
 from .models import Question, Answer
 from .forms import *
@@ -60,7 +61,8 @@ def question(request, id):
         raise Http404
 
     if request.method == "POST":
-        form = AnswerForm(**request.POST)
+        form = AnswerForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             answer = form.save()
             url = question.get_url()
@@ -79,6 +81,7 @@ def question(request, id):
 def ask(request):
     if request.method == "POST":
         form = AskForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             question = form.save()
             url = question.get_url()
@@ -86,5 +89,31 @@ def ask(request):
     else:
         form = AskForm()
     return render(request, 'questions/ask.html', {
+        'form': form
+    })
+
+def signup(request):
+    if request.method == "POST":
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect("/")
+    else:
+        form = SignupForm()
+    return render(request, 'signup.html', {
+        'form': form
+    })
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return HttpResponseRedirect("/")
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {
         'form': form
     })

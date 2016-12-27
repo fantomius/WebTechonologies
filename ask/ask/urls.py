@@ -15,12 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 
-from qa.views import test, new, popular, question, ask
+from qa.views import test, new, popular, question, ask, signup, login
 
 urlpatterns = [
     url(r'^$', new),
-    url(r'^login/$', test),
-    url(r'^signup/$', test),
+    url(r'^login/$', login),
+    url(r'^signup/$', signup),
     url(r'^question/(?P<id>[0-9]+)/$', question, name='question-details'),
     url(r'^ask/$', ask),
     url(r'^popular/$', popular),
